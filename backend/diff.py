@@ -1,17 +1,7 @@
-"""Derive (observed_form, canonical_form) memory candidates from an
-observation: an ASR transcript plus the user's corrected version.
-
-We diff the FORMATTED baseline (not the raw ASR) against the correction, so
-that generic capitalization/punctuation the formatter already owns never
-pollutes memory - only the personal-term corrections left over after
-formatting are learned. Sentence-initial re-casing with no spelling change is
-skipped for the same reason (the formatter already capitalizes the first word
-of every sentence). Mid-sentence re-casing with no spelling change IS learned:
-the formatter (see backend/formatter.py) deliberately does not guess that a
-lowercase mid-sentence word is a proper noun, so a user capitalizing one
-("sohail" -> "Sohail") is exactly the personal-term signal memory exists to
-capture, not formatting's job.
-"""
+"""Derive (observed_form, canonical_form) memory candidates by diffing the
+FORMATTED baseline (not raw ASR) against the user's correction, so generic
+formatting noise never pollutes memory - only the personal-term corrections
+left over after formatting get learned."""
 import difflib
 from dataclasses import dataclass
 
@@ -66,19 +56,11 @@ def extract_observations(asr_text: str, corrected_text: str) -> tuple[list[Obser
     matcher = difflib.SequenceMatcher(a=f_norms, b=c_norms, autojunk=False)
     raw_ops = matcher.get_opcodes()
 
-    # Merge a trailing "insert" into the immediately preceding block so that
-    # pure expansions like "apple" -> "Apple Inc" - an insert right after an
-    # equal token, not a same-length replace - are still learned as a single
-    # (observed, canonical) pair instead of being silently dropped.
-    #
-    # Only the LAST token of a preceding "equal" block is pulled in as the
-    # anchor - not the whole block. Merging the entire equal run is wrong
-    # whenever that run is long (e.g. "meeting is scheduled in nassau" all
-    # matching before an inserted "county" would otherwise produce one
-    # 5-word replace span that MAX_SPAN_TOKENS then rejects outright,
-    # silently dropping the observation instead of learning "nassau" ->
-    # "Nassau County"). "delete" (a word removed outright) stays unhandled -
-    # out of scope for this assignment's word-level memory.
+    # Merge a trailing "insert" into just the last token of the preceding
+    # "equal" block, so expansions like "apple" -> "Apple Inc" get learned as
+    # one pair. Pulling in the whole equal run instead (not just the last
+    # token) would blow past MAX_SPAN_TOKENS on longer sentences and silently
+    # drop the observation.
     merged_ops: list[tuple[str, int, int, int, int]] = []
     for tag, i1, i2, j1, j2 in raw_ops:
         if tag == "insert" and merged_ops and merged_ops[-1][2] == i1 and merged_ops[-1][0] != "delete":
@@ -96,17 +78,8 @@ def extract_observations(asr_text: str, corrected_text: str) -> tuple[list[Obser
     for tag, i1, i2, j1, j2 in merged_ops:
         if tag == "equal":
             # SequenceMatcher compares lowercase norms, so a pure-casing
-            # change (e.g. "priya" -> "Priya") never produces a "replace" op
-            # - it looks identical to the matcher. Scan matched pairs here to
-            # catch that case: same norm, different base casing, mid-sentence.
-            # A recasing token next to an unrelated replace (e.g. "sarvam"
-            # right before "kiwi" -> "Kivi") is learned as its own entry, same
-            # as one next to a replace it's semantically part of (e.g. "new"
-            # before "yolk sity" -> "York City") - the diff alone can't tell
-            # those apart without real entity extraction (future work: see
-            # README). Either way the combined substitutions still produce
-            # the correct final sentence; they just land as separate memories
-            # instead of one multi-word one.
+            # change ("priya" -> "Priya") looks identical to it - scan
+            # matched pairs here to catch that case separately.
             for offset in range(i2 - i1):
                 f_tok, c_tok = f_tokens[i1 + offset], c_tokens[j1 + offset]
                 if f_tok.base == c_tok.base or _is_sentence_initial(formatted, f_tok.start):

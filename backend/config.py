@@ -18,9 +18,6 @@ CONTEXT_WINDOW = int(os.environ.get("KIVI_CONTEXT_WINDOW", "4"))
 KIVI_LLM_API_KEY = os.environ.get("KIVI_LLM_API_KEY", "")
 KIVI_USE_LLM_FORMATTER = os.environ.get("KIVI_USE_LLM_FORMATTER", "false").lower() == "true"
 
-# Optional LLM-assisted grouping of adjacent word-level corrections into one
-# multi-word entity (off by default - see backend/grouping.py and README
-# "Optional: LLM-assisted grouping"). Needs KIVI_LLM_GROUPING_ENABLED=true
-# AND real provider credentials (MISTRAL_KEY/NVIDIA_KEY); missing credentials
-# degrade silently to the existing deterministic (fragmented) behavior.
+# Optional LLM-assisted grouping of adjacent corrections (off by default,
+# see backend/grouping.py) - needs credentials too, degrades silently without them.
 KIVI_LLM_GROUPING_ENABLED = os.environ.get("KIVI_LLM_GROUPING_ENABLED", "false").lower() == "true"

@@ -136,10 +136,8 @@ def learn_from_conversations(req: LearnFromConversationsRequest, session: Sessio
     if not req.conversations:
         raise HTTPException(status_code=400, detail="'conversations' must be non-empty")
 
-    # No try/except for missing LLM credentials here: memory_service.learn_from_conversations
-    # already treats that as normal (NER's free first pass still runs; the LLM pass is a
-    # best-effort refinement, not a requirement), so this endpoint always succeeds unless
-    # something genuinely unexpected happens (e.g. a DB error).
+    # No credentials try/except here - learn_from_conversations already treats
+    # a missing LLM key as normal (NER's free pass still runs).
     results = memory_service.learn_from_conversations(session, req.conversations)
 
     return LearnFromConversationsResponse(

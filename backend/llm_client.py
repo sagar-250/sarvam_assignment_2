@@ -1,17 +1,9 @@
-"""Thin, optional LLM client - used by dev/eval tooling in tools/ and eval/,
-and by opt-in backend features (backend/grouping.py) that are gated behind an
-explicit config flag AND real credentials. Never called on the primary,
-credential-free review path described in RUN.md.
-
-Provider defaults to Mistral (KIVI_LLM_PROVIDER=mistral), since it proved far
-faster and more reliable on this account than NVIDIA NIM (which was tried
-first - see README "Optional: LLM-assisted eval scale-out" for the full
-comparison). Set KIVI_LLM_PROVIDER=nvidia to switch back.
-
-Reads MISTRAL_KEY / NVIDIA_KEY from the environment, falling back to a `.env`
-one level above this repo for local dev convenience - a reviewer's clone
-needs the real environment variables (documented in .env.example).
-"""
+"""Thin, optional LLM client used by dev/eval tooling and opt-in backend
+features (grouping.py, entity_extraction.py) - never called on the primary
+credential-free review path. Defaults to Mistral (see README for why);
+set KIVI_LLM_PROVIDER=nvidia to switch. Reads MISTRAL_KEY/NVIDIA_KEY from
+the environment, falling back to a `.env` one level above this repo for
+local dev convenience."""
 import json
 import os
 import re
@@ -48,10 +40,10 @@ WINDOW_SECONDS = 60
 
 
 class LLMCredentialsMissingError(RuntimeError):
-    """Raised when the configured provider's API key isn't available. Callers
-    that want to treat "no LLM configured" as a normal, expected condition
-    (rather than a transient failure worth retrying) should catch this
-    specifically - chat_json() re-raises it immediately, without retrying."""
+    """Raised when the provider's API key isn't available. chat_json()
+    re-raises it immediately without retrying - callers that want to treat
+    "no LLM configured" as normal rather than a transient failure should
+    catch this specifically."""
 
 
 def _load_key() -> str:

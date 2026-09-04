@@ -12,10 +12,6 @@ def test_brief_example_produces_exactly_two_pairs():
     assert set(by_observed) == {"aditya", "kiwi", "sarvam"}
     assert by_observed["aditya"].canonical_form == "Aaditya"
     assert by_observed["kiwi"].canonical_form == "Kivi"
-    # "sarvam" -> "Sarvam" is a pure re-casing diff (mid-sentence, no spelling
-    # change) and IS learned - see test_mid_sentence_pure_casing_is_learned.
-    # It doesn't show up in the RUN.md walkthrough output because it's never
-    # been taught (not in seed data), not because casing-only diffs are unlearnable.
 
 
 def test_mid_sentence_pure_casing_is_learned():
@@ -26,20 +22,11 @@ def test_mid_sentence_pure_casing_is_learned():
 
 
 def test_sentence_initial_pure_casing_is_not_learned():
-    # The formatter already capitalizes the first word of every sentence, so
-    # a correction that's ONLY that would just re-teach the formatter's own job.
     pairs, _ = extract_observations("sohail is here", "Sohail is here")
     assert pairs == []
 
 
 def test_recasing_adjacent_to_replace_learns_both_as_separate_pairs():
-    # "new" borders the "yolk sity" -> "York City" replace block. Without real
-    # entity extraction the diff can't tell whether an adjacent recasing token
-    # is part of that entity or an unrelated word, so it's learned separately
-    # (see test_brief_example_produces_exactly_two_pairs, where "sarvam" borders
-    # "kiwi" -> "Kivi" and is unrelated to it). Applying both substitutions
-    # still reconstructs "New York City" correctly - see
-    # test_retrieval.test_multiword_observed_span_matched.
     pairs, _ = extract_observations("flying to new yolk sity", "Flying to New York City")
     by_observed = {p.observed_form: p for p in pairs}
     assert by_observed["new"].canonical_form == "New"

@@ -42,12 +42,6 @@ def test_inactive_candidate_still_surfaced(session):
 
 
 def test_multiword_observed_span_matched(session):
-    # "yolk sity" genuinely differs from "York City" in spelling, so
-    # SequenceMatcher yields a single 2-token replace block (token_count=2).
-    # "new" only differs by casing from "New" and is learned as its own
-    # single-token memory (see test_diff.test_recasing_adjacent_to_replace_
-    # learns_both_as_separate_pairs) - applying both together still
-    # reconstructs "New York City" correctly, just as two candidates.
     _activate(session, "flying to new yolk sity", "Flying to New York City")
     tokens = tokenize("Visit new yolk sity tomorrow.")
     cands = retrieve(session, tokens)

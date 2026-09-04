@@ -134,8 +134,6 @@ def test_learn_from_conversations_rejects_empty_list(client):
 
 
 def test_learn_from_conversations_degrades_to_ner_only_when_credentials_missing(client):
-    """Missing LLM credentials must NOT be an error - NER's free first pass
-    still runs, so the request succeeds with whatever NER alone found."""
     from unittest.mock import patch
 
     from backend import entity_extraction, ner_extraction
@@ -154,7 +152,6 @@ def test_learn_from_conversations_degrades_to_ner_only_when_credentials_missing(
     assert learned[0]["observed_form"] == "aaditya"
     assert learned[0]["sources"] == ["ner"]
 
-    # everything else keeps working right after
     r = client.get("/api/memories")
     assert r.status_code == 200
     r = client.post("/api/run", json={"asr": "hello world"})
@@ -162,8 +159,6 @@ def test_learn_from_conversations_degrades_to_ner_only_when_credentials_missing(
 
 
 def test_learn_from_conversations_reports_error_when_nothing_available(client):
-    """If NEITHER the NER model nor LLM credentials are available, the
-    conversation gets a clear, actionable error - not a silent empty result."""
     from unittest.mock import patch
 
     from backend import ner_extraction

@@ -71,14 +71,12 @@ def span_norm(tokens: list[Token]) -> str:
 
 
 def normalize_span(text: str) -> tuple[str, str, int] | None:
-    """Tokenize `text` and return (observed_form, canonical_form, token_count) -
-    the exact shape retrieval.py/decision.py expect for a Memory row key (see
-    span_norm above and the base-joined canonical_form backend/diff.py builds).
-    Returns None if `text` has no tokenizable words. Any caller deriving a
-    Memory row from free text (not from diffing an asr/corrected pair) MUST
-    go through this - building observed_form/canonical_form any other way
-    (e.g. naive .lower()/.split()) risks a row retrieval can silently never
-    match, since retrieval keys strictly on the tokenizer's own normalization."""
+    """Tokenize `text` and return (observed_form, canonical_form, token_count)
+    - the shape retrieval.py/decision.py expect for a Memory row key. Returns
+    None if `text` has no tokenizable words. Anything deriving a Memory row
+    from free text (not by diffing an asr/corrected pair) must go through
+    this rather than e.g. naive .lower()/.split(), or retrieval can silently
+    never match it."""
     toks = tokenize(text)
     if not toks:
         return None

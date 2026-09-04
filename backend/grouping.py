@@ -1,21 +1,9 @@
-"""Optional, off-by-default LLM-assisted grouping for the fragmentation
-limitation documented in README ("Sentence-initial re-casing never gets
-learned, but mid-sentence re-casing does"): word-level diffing (backend/diff.py)
-can't tell "these two adjacent corrections are one multi-word entity" (e.g.
-teaching "new yolk sity" -> "New York City" learns "new" -> "New" and
-"yolk sity" -> "York City" as two separate memories) from "these two adjacent
-corrections are unrelated" (e.g. the brief's own flagship example, where
-"sarvam" -> "Sarvam" sits right next to "kiwi" -> "Kivi" and must stay
-separate). A real NER/LLM judgment call is exactly what's needed to
-disambiguate the two - and exactly what backend/formatter.py's docstring
-already says is out of scope for the deterministic path.
-
-Gated behind config.KIVI_LLM_GROUPING_ENABLED (default False) AND real LLM
-credentials. When either is unavailable, this is a no-op: the existing
-deterministic (possibly-fragmented, but still individually-correct) pairs
-pass through completely unchanged, so the primary zero-credential review
-path and eval/tests are never affected by this module.
-"""
+"""Optional, off-by-default LLM pass that merges adjacent word-level
+corrections into one multi-word entity when they belong together (e.g. "new"
++ "yolk sity" -> "New York City"), while leaving genuinely unrelated adjacent
+corrections separate (e.g. "sarvam" + "kiwi"). Gated on
+config.KIVI_LLM_GROUPING_ENABLED and real credentials; a no-op otherwise, so
+the primary zero-credential path is never affected."""
 from backend import config
 from backend.diff import ObservationPair
 from backend.llm_client import LLMCredentialsMissingError, chat_json
@@ -62,15 +50,10 @@ def _ask_llm_should_merge(a: ObservationPair, b: ObservationPair, corrected_text
 def maybe_group_adjacent_pairs(
     pairs: list[ObservationPair], corrected_text: str
 ) -> tuple[list[ObservationPair], bool]:
-    """If grouping is enabled and credentials are available, ask the LLM
-    about each pair of adjacent-in-text corrections and merge the ones it
-    says form one entity. Returns (possibly-merged pairs, whether any LLM
-    call was actually attempted) - the caller uses the flag purely for
-    reporting/logging, never for control flow.
-
-    Any failure (flag off, no credentials, malformed LLM output, network
-    error) falls back to returning `pairs` completely unchanged - this must
-    never be able to make behavior worse than not grouping at all."""
+    """Ask the LLM about each pair of adjacent-in-text corrections and merge
+    the ones it says form one entity. Returns (possibly-merged pairs, whether
+    an LLM call was attempted). Any failure - flag off, no credentials,
+    malformed output, network error - falls back to `pairs` unchanged."""
     if not config.KIVI_LLM_GROUPING_ENABLED or len(pairs) < 2:
         return pairs, False
 

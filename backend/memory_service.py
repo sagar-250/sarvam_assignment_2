@@ -1,14 +1,8 @@
 """Memory lifecycle: learning from observations, listing, deleting, resetting.
 
-Confidence = min(1.0, evidence_count / EVIDENCE_THRESHOLD). With the default
-EVIDENCE_THRESHOLD=3 and MIN_EVIDENCE_ACTIVE=2, confidence crosses
-MIN_CONFIDENCE_ACTIVE=0.6 (0.667) at exactly the same point evidence_count
-crosses 2 - the two thresholds never disagree.
-
-A single observation is deliberately NOT enough to change output: it could be
-a one-off ASR fluke or a user typo. A second, independent confirmation of the
-same correction is required before the memory is trusted (see README).
-"""
+confidence = min(1.0, evidence_count / EVIDENCE_THRESHOLD); a memory only
+activates once evidence_count >= 2 and confidence >= 0.6, so a single
+observation is never enough to change output (see README)."""
 from dataclasses import dataclass
 
 from sqlalchemy import delete as sa_delete
@@ -36,9 +30,7 @@ def _upsert_memory(
 ) -> tuple[Memory, str]:
     """Upsert one Memory row keyed by (observed_form, canonical_form) and
     recompute evidence_count/confidence/active. Caller owns the Evidence row
-    and the commit. Shared by learn() (word-level diff pairs) and
-    learn_from_conversations() (extracted entities) so the activation math
-    lives in exactly one place."""
+    and the commit."""
     row = (
         session.query(Memory)
         .filter(Memory.observed_form == observed_form, Memory.canonical_form == canonical_form)
@@ -110,16 +102,14 @@ class BulkPairResult:
 
 
 def learn_bulk_pairs(session: Session, pairs: list[tuple[str, str]]) -> list[BulkPairResult]:
-    """Teach many (asr, corrected) pairs at once - a thin loop over learn(),
-    reusing its exact upsert/evidence/activation logic unchanged. Each pair is
-    validated independently so one malformed row doesn't abort the batch.
+    """Teach many (asr, corrected) pairs at once. Each pair is validated
+    independently so one malformed row doesn't abort the batch.
 
-    Snapshots evidence_count/confidence/active into plain values right after
-    each learn() call rather than holding onto the live LearnResult - if a
-    later pair in the same batch reinforces the same Memory row, SQLAlchemy's
-    identity map means every earlier LearnResult.memory for that row is the
-    SAME mutable object, so deferring the read would silently report every
-    pair's state as whatever the row ended up at by the end of the loop."""
+    Snapshots evidence_count/confidence/active right after each learn() call
+    instead of holding the live LearnResult - if a later pair reinforces the
+    same Memory row, SQLAlchemy's identity map makes every earlier
+    LearnResult.memory the same mutable object, so a lazy read would report
+    every pair's state as whatever the row ends up at."""
     out: list[BulkPairResult] = []
     for idx, (asr, corrected) in enumerate(pairs):
         if not asr.strip() or not corrected.strip():
@@ -169,37 +159,18 @@ class ConversationResult:
 
 
 def learn_from_conversations(session: Session, conversation_texts: list[str]) -> list[ConversationResult]:
-    """Teach Kivi from finished, already-corrected conversation transcripts -
-    no raw-ASR side needed, so backend.diff's (wrong, right) pair diffing
-    can't apply. Two extraction passes feed the same _upsert_memory()/
-    evidence/activation logic learn() uses:
-
-    1. backend.ner_extraction - spaCy NER, free, offline, always attempted.
-       Real but imperfect: strong on ordinary names/places, weak on the
-       idiosyncratic/invented terms this system exists to remember (verified
-       directly - see that module's docstring).
-    2. backend.entity_extraction - LLM-based, optional. Attempted only if
-       provider credentials are configured; a missing key is treated as
-       "this pass didn't run," not an error - the whole feature must never
-       be worse than NER alone just because no LLM key is set. Any OTHER
-       failure (malformed output, network error after internal retries) is
-       swallowed the same way, for the same reason: a transient LLM hiccup
-       shouldn't discard entities NER already found.
-
-    Results are merged by normalized form; when both passes find the same
-    entity, the LLM's classification wins (more context to work with) and
-    `sources` records both. Entities are deduplicated WITHIN each
-    conversation before upserting, so a name mentioned 5 times in one
-    document contributes at most 1 evidence increment - a single document
-    shouldn't be able to fake independent multi-source confirmation."""
+    """Teach Kivi from finished, already-corrected conversations - no raw-ASR
+    side, so nothing to diff. Two extraction passes feed the same
+    _upsert_memory(): spaCy NER (free, offline, always attempted) and an
+    optional LLM pass (only if credentials are configured; a missing key or
+    any other failure is treated as "this pass didn't run", not an error).
+    Results merge by normalized form, LLM's type wins on overlap, and
+    entities are deduplicated WITHIN each conversation before upserting so
+    one document can't fake multi-source confirmation."""
     from backend.entity_extraction import extract_entities
     from backend.llm_client import LLMCredentialsMissingError
     from backend.ner_extraction import extract_entities_ner, ner_model_available
     from backend.tokenizer import normalize_span
-    # Local imports: keeps this module importable, and the NER-only path
-    # fully usable, even when entity_extraction's LLM dependency chain
-    # (backend.llm_client) is never exercised - the optional-feature
-    # boundary the rest of this file otherwise has no reason to know about.
 
     out: list[ConversationResult] = []
     for idx, convo in enumerate(conversation_texts):

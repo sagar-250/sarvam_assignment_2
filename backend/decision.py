@@ -1,23 +1,6 @@
 """Decide, for each retrieved candidate, whether to intervene - and produce a
-human-readable reason either way. This is what makes every decision (applied
-or not) explainable, per the assignment's "understand why the system did or
-did not intervene" requirement.
-
-Concrete rules, applied in order:
-  1. Already-correct guard - span already matches the canonical form.
-  2. Confidence gate - candidate memory must be `active` (evidence_count >= 2
-     and confidence >= 0.6).
-  3. Ambiguous-common-word context gate - a small, deliberately curated set of
-     words that are ALSO ordinary dictionary words (e.g. "apple") require a
-     nearby supporting cue before a specialized meaning is applied. This list
-     is intentionally small and hand-curated rather than a full dictionary:
-     a full dictionary would gate too aggressively and block ordinary product
-     names that happen to be real words (e.g. "kiwi") - documented as a
-     limitation in README.
-  4. Conflicting candidates - if multiple active rows match the same span
-     with different canonical forms, the highest-confidence one wins and the
-     explanation says so.
-"""
+human-readable reason either way (rules, in order: already correct, below
+confidence, ambiguous word without supporting context, conflicting candidates)."""
 from dataclasses import dataclass
 
 from backend import config

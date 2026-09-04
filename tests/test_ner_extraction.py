@@ -2,8 +2,7 @@ from backend import ner_extraction
 
 
 def test_ner_model_is_available_in_this_environment():
-    # This test environment has en_core_web_sm installed (see RUN.md); if this
-    # ever fails, run: python -m spacy download en_core_web_sm
+    # if this fails: python -m spacy download en_core_web_sm
     assert ner_extraction.ner_model_available() is True
 
 
@@ -30,13 +29,6 @@ def test_deduplicates_repeated_mentions():
 
 
 def test_verified_recall_gap_on_south_asian_names_without_verb_context():
-    """Documents a real, verified gap (not assumed): en_core_web_sm misses
-    'Rahul' as PERSON entirely here, in a sentence structure where it also
-    misses the equally name-shaped 'John' - but reliably catches 'Sarah'
-    when there's a supporting verb context ('called', 'left a message').
-    This is the concrete evidence behind backend/ner_extraction.py's
-    docstring and README's design rationale for keeping the LLM pass as a
-    refinement, not treating NER alone as sufficient."""
     entities = ner_extraction.extract_entities_ner(
         "Meet Rahul tomorrow to discuss the launch in Mumbai with Google."
     )

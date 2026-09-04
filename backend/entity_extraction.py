@@ -1,19 +1,9 @@
 """Extracts personal/idiosyncratic named entities directly from a finished,
-already-corrected conversation transcript - no raw-ASR side needed.
-
-This is a genuinely different mechanism from backend/diff.py: diffing needs a
-(wrong, right) pair to compare; a finished conversation has no "wrong" side to
-diff against. Recognizing that "Aaditya" or "Kivi" are personal terms worth
-remembering, from correct text alone, needs real judgment a deterministic
-formatter can't provide (see backend/formatter.py's docstring) - so this
-module is LLM-only, and (like backend/grouping.py) entirely optional: gated
-behind real provider credentials, never touching the primary review path.
-
-The LLM is trusted only to spot candidate spans and roughly classify them -
-never to invent facts. Every candidate is verified as a literal substring of
-the source text before being accepted (`_valid`); anything the model
-hallucinates that isn't actually in the transcript is silently discarded.
-"""
+already-corrected conversation transcript - no raw-ASR side to diff against,
+so this is LLM-only and optional, gated behind real provider credentials.
+The LLM is trusted only to spot and roughly classify candidate spans, never
+to invent facts: every candidate must be a literal substring of the source
+text (`_valid`) or it's discarded."""
 from dataclasses import dataclass
 
 from backend import config
@@ -71,10 +61,8 @@ def _valid(item: dict, source_text: str) -> bool:
 
 def extract_entities(conversation_text: str) -> list[ExtractedEntity]:
     """Calls the LLM once for this conversation and returns validated,
-    deduplicated entities. Raises LLMCredentialsMissingError (propagated,
-    uncaught) if no provider key is configured - callers decide how to
-    surface that; raises whatever chat_json raises on other failures after
-    its own internal retries are exhausted."""
+    deduplicated entities. Propagates LLMCredentialsMissingError uncaught if
+    no provider key is configured - callers decide how to handle that."""
     prompt = USER_PROMPT_TEMPLATE.format(text=conversation_text, max_span=config.MAX_SPAN_TOKENS)
     raw = chat_json(SYSTEM_PROMPT, prompt, temperature=0.2, max_tokens=1000)
 
