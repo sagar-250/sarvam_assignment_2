@@ -1,0 +1,2235 @@
+{
+  "summary": {
+    "run_at": "2026-09-04T12:25:34Z",
+    "total_cases": 26,
+    "passed_cases": 26,
+    "failed_cases": 0,
+    "overall": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "counts": {
+      "TP_useful_intervention": 22,
+      "FP_unnecessary_intervention": 0,
+      "FP_unexpected_intervention": 0,
+      "FN_missed_intervention": 0,
+      "FN_missed_intervention_no_candidate": 0,
+      "TN": 2,
+      "TN_no_candidate": 2
+    },
+    "by_category": {
+      "name_and_product": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 3,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "product_names": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 1,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "possessive_forms": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 2,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "already_correct_input": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 0,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 2
+        }
+      },
+      "low_confidence_no_intervene": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 0,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 1,
+          "TN_no_candidate": 0
+        }
+      },
+      "repeated_confirmation": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 1,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "unseen_terms": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 0,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "ambiguous_common_word": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 3,
+          "cases_passed": 3,
+          "TP_useful_intervention": 2,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 1,
+          "TN_no_candidate": 0
+        }
+      },
+      "case_sensitivity": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 2,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "punctuation_adjacent_tokens": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 3,
+          "cases_passed": 3,
+          "TP_useful_intervention": 3,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "multiword_entities": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 3,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "conflicting_evidence": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 1,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "fuzzy_typo_within_budget": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 1,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "fuzzy_typo_exceeds_budget": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 2,
+          "cases_passed": 2,
+          "TP_useful_intervention": 0,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "personal_names": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 1,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      },
+      "multiple_memories_same_sentence": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "counts": {
+          "cases_total": 1,
+          "cases_passed": 1,
+          "TP_useful_intervention": 2,
+          "FP_unnecessary_intervention": 0,
+          "FP_unexpected_intervention": 0,
+          "FN_missed_intervention": 0,
+          "FN_missed_intervention_no_candidate": 0,
+          "TN": 0,
+          "TN_no_candidate": 0
+        }
+      }
+    }
+  },
+  "latency": {
+    "p50_ms": 3.381,
+    "p95_ms": 4.967,
+    "max_ms": 7.367,
+    "sla_ms": 50.0,
+    "sla_met": true
+  },
+  "db_growth": {
+    "checkpoints": [
+      {
+        "observations_fed": 10,
+        "memory_rows": 6
+      },
+      {
+        "observations_fed": 25,
+        "memory_rows": 6
+      },
+      {
+        "observations_fed": 50,
+        "memory_rows": 7
+      },
+      {
+        "observations_fed": 93,
+        "memory_rows": 8
+      }
+    ]
+  },
+  "model_usage": {
+    "llm_enabled": false,
+    "llm_calls": 0,
+    "estimated_cost_usd": 0.0,
+    "note": "N/A - the default formatter is rule-based; no LLM calls occur in this configuration."
+  },
+  "cases": [
+    {
+      "id": "brief_example_001",
+      "category": "name_and_product",
+      "notes": "The assignment's own flagship example, reproduced end-to-end - now matching the brief's literal worked example exactly (including 'Sarvam' capitalized). 'sarvam' is a mid-sentence, casing-only diff; the formatter never guesses proper-noun casing for non-sentence-initial words (see backend/formatter.py), so that gap is memory's to fill, and it is learned like any other personal term after 2 confirmations.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "ask aditya to review the sarvam kiwi service",
+            "corrected": "Ask Aaditya to review the Sarvam Kivi service."
+          },
+          {
+            "asr": "ask aditya to review the sarvam kiwi service",
+            "corrected": "Ask Aaditya to review the Sarvam Kivi service."
+          }
+        ],
+        "asr": "ask aditya to review the sarvam kiwi service"
+      },
+      "expected": {
+        "formatted": "Ask aditya to review the sarvam kiwi service.",
+        "memory_aware": "Ask Aaditya to review the Sarvam Kivi service.",
+        "intervention_spans": [
+          "aditya",
+          "sarvam",
+          "kiwi"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask aditya to review the sarvam kiwi service.",
+        "memory_aware": "Ask Aaditya to review the Sarvam Kivi service.",
+        "interventions": [
+          {
+            "span": "aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          },
+          {
+            "span": "sarvam",
+            "applied": "Sarvam",
+            "memory_id": 2,
+            "observed_form": "sarvam",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'sarvam' with 'Sarvam' (memory #2, confidence 0.67, 2 observations)."
+          },
+          {
+            "span": "kiwi",
+            "applied": "Kivi",
+            "memory_id": 3,
+            "observed_form": "kiwi",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'kiwi' with 'Kivi' (memory #3, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 3,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.786600",
+          "last_updated": "2026-09-04T12:25:32.800586"
+        },
+        {
+          "id": 2,
+          "observed_form": "sarvam",
+          "canonical_form": "Sarvam",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.784584",
+          "last_updated": "2026-09-04T12:25:32.800586"
+        },
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.783583",
+          "last_updated": "2026-09-04T12:25:32.800586"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ],
+          [
+            "sarvam",
+            "TP_useful_intervention"
+          ],
+          [
+            "kiwi",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 4.967,
+      "passed": true
+    },
+    {
+      "id": "product_basic_002",
+      "category": "product_names",
+      "notes": "Basic single-token product correction.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          }
+        ],
+        "asr": "please restart kiwi now"
+      },
+      "expected": {
+        "formatted": "Please restart kiwi now.",
+        "memory_aware": "Please restart Kivi now.",
+        "intervention_spans": [
+          "kiwi"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Please restart kiwi now.",
+        "memory_aware": "Please restart Kivi now.",
+        "interventions": [
+          {
+            "span": "kiwi",
+            "applied": "Kivi",
+            "memory_id": 1,
+            "observed_form": "kiwi",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'kiwi' with 'Kivi' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.830625",
+          "last_updated": "2026-09-04T12:25:32.838706"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "kiwi",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.463,
+      "passed": true
+    },
+    {
+      "id": "product_possessive_003",
+      "category": "possessive_forms",
+      "notes": "Possessive suffix must be reattached after substitution, not lost or mismatched.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          }
+        ],
+        "asr": "check kiwi's settings"
+      },
+      "expected": {
+        "formatted": "Check kiwi's settings.",
+        "memory_aware": "Check Kivi's settings.",
+        "intervention_spans": [
+          "kiwi"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Check kiwi's settings.",
+        "memory_aware": "Check Kivi's settings.",
+        "interventions": [
+          {
+            "span": "kiwi's",
+            "applied": "Kivi",
+            "memory_id": 1,
+            "observed_form": "kiwi",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'kiwi's' with 'Kivi' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.862544",
+          "last_updated": "2026-09-04T12:25:32.871847"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "kiwi",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.126,
+      "passed": true
+    },
+    {
+      "id": "product_already_correct_004",
+      "category": "already_correct_input",
+      "notes": "Input already uses the canonical form - must be recognized as already-correct and left untouched, not double-corrected.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          }
+        ],
+        "asr": "the Kivi app works great"
+      },
+      "expected": {
+        "formatted": "The Kivi app works great.",
+        "memory_aware": "The Kivi app works great.",
+        "intervention_spans": [],
+        "no_intervention_spans": [
+          "kiwi"
+        ]
+      },
+      "actual": {
+        "formatted": "The Kivi app works great.",
+        "memory_aware": "The Kivi app works great.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.892026",
+          "last_updated": "2026-09-04T12:25:32.900027"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "kiwi",
+            "TN_no_candidate"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.596,
+      "passed": true
+    },
+    {
+      "id": "low_confidence_single_obs_005",
+      "category": "low_confidence_no_intervene",
+      "notes": "Only one observation so far (evidence_count=1, confidence=0.33) - a single correction must not be enough to change output; could be a one-off typo.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ask aditya to review"
+      },
+      "expected": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask aditya to review.",
+        "intervention_spans": [],
+        "no_intervention_spans": [
+          "aditya"
+        ]
+      },
+      "actual": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask aditya to review.",
+        "interventions": [],
+        "non_interventions": [
+          {
+            "span": "aditya",
+            "applied": null,
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.333,
+            "evidence_count": 1,
+            "reason": "below_confidence_threshold",
+            "explanation": "'aditya' matches a candidate memory (#1) but it is not yet trusted (evidence_count=1, confidence=0.33 < 0.60); left unchanged."
+          }
+        ]
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 1,
+          "confidence": 0.333,
+          "active": false,
+          "created_at": "2026-09-04T12:25:32.922031",
+          "last_updated": "2026-09-04T12:25:32.922031"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TN"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.223,
+      "passed": true
+    },
+    {
+      "id": "activation_after_second_obs_006",
+      "category": "repeated_confirmation",
+      "notes": "Same term as case 005, but now confirmed twice (evidence_count=2, confidence=0.67 >= 0.60) - now trusted and applied.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ask aditya to review"
+      },
+      "expected": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask Aaditya to review.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask Aaditya to review.",
+        "interventions": [
+          {
+            "span": "aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.942925",
+          "last_updated": "2026-09-04T12:25:32.951065"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.273,
+      "passed": true
+    },
+    {
+      "id": "unseen_term_007",
+      "category": "unseen_terms",
+      "notes": "'rajesh' has no memory at all and is not fuzzy-close to any existing entry - must pass through completely untouched, with no candidate surfaced at all (distinct from a low-confidence candidate).",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ask rajesh to review"
+      },
+      "expected": {
+        "formatted": "Ask rajesh to review.",
+        "memory_aware": "Ask rajesh to review.",
+        "intervention_spans": [],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask rajesh to review.",
+        "memory_aware": "Ask rajesh to review.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:32.971207",
+          "last_updated": "2026-09-04T12:25:32.979603"
+        }
+      ],
+      "classification": {
+        "span_results": [],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.183,
+      "passed": true
+    },
+    {
+      "id": "unseen_term_008",
+      "category": "unseen_terms",
+      "notes": "Empty memory state entirely - system must be a safe no-op with zero learned terms.",
+      "inputs": {
+        "observations": [],
+        "asr": "let's discuss the roadmap next week"
+      },
+      "expected": {
+        "formatted": "Let's discuss the roadmap next week.",
+        "memory_aware": "Let's discuss the roadmap next week.",
+        "intervention_spans": [],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Let's discuss the roadmap next week.",
+        "memory_aware": "Let's discuss the roadmap next week.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [],
+      "classification": {
+        "span_results": [],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.126,
+      "passed": true
+    },
+    {
+      "id": "ambiguous_common_word_negative_009",
+      "category": "ambiguous_common_word",
+      "notes": "'apple' the fruit vs 'Apple Inc' the company - no supporting context cue nearby, so the specialized meaning must NOT be forced onto an ordinary sentence about fruit.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "apple released a new update",
+            "corrected": "Apple Inc. released a new update"
+          },
+          {
+            "asr": "apple released a new update",
+            "corrected": "Apple Inc. released a new update"
+          }
+        ],
+        "asr": "i ate a whole apple for lunch"
+      },
+      "expected": {
+        "formatted": "I ate a whole apple for lunch.",
+        "memory_aware": "I ate a whole apple for lunch.",
+        "intervention_spans": [],
+        "no_intervention_spans": [
+          "apple"
+        ]
+      },
+      "actual": {
+        "formatted": "I ate a whole apple for lunch.",
+        "memory_aware": "I ate a whole apple for lunch.",
+        "interventions": [],
+        "non_interventions": [
+          {
+            "span": "apple",
+            "applied": null,
+            "memory_id": 1,
+            "observed_form": "apple",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "ambiguous_common_word_no_supporting_context",
+            "explanation": "'apple' matches memory #1 (product, confidence 0.67) but no supporting context word was found nearby; left unchanged to avoid a false correction."
+          }
+        ]
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "apple",
+          "canonical_form": "Apple Inc",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.013126",
+          "last_updated": "2026-09-04T12:25:33.021126"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "apple",
+            "TN"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.139,
+      "passed": true
+    },
+    {
+      "id": "ambiguous_common_word_positive_010",
+      "category": "ambiguous_common_word",
+      "notes": "Same ambiguous word as 009, but now with supporting context cues ('company', 'stock') nearby - the same heuristic that blocked 009 must allow this one, proving it isn't a blanket block.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "apple released a new update",
+            "corrected": "Apple Inc. released a new update"
+          },
+          {
+            "asr": "apple released a new update",
+            "corrected": "Apple Inc. released a new update"
+          }
+        ],
+        "asr": "apple confirmed the company stock update today"
+      },
+      "expected": {
+        "formatted": "Apple confirmed the company stock update today.",
+        "memory_aware": "Apple Inc confirmed the company stock update today.",
+        "intervention_spans": [
+          "apple"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Apple confirmed the company stock update today.",
+        "memory_aware": "Apple Inc confirmed the company stock update today.",
+        "interventions": [
+          {
+            "span": "Apple",
+            "applied": "Apple Inc",
+            "memory_id": 1,
+            "observed_form": "apple",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'Apple' with 'Apple Inc' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "apple",
+          "canonical_form": "Apple Inc",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.044230",
+          "last_updated": "2026-09-04T12:25:33.052318"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "apple",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.516,
+      "passed": true
+    },
+    {
+      "id": "ambiguous_word_not_overgated_011",
+      "category": "ambiguous_common_word",
+      "notes": "'kiwi' is ALSO an ordinary word (fruit/bird) but is deliberately NOT in the curated ambiguous-word stoplist (only 'apple' is, by design) - documents a known, accepted limitation: the stoplist is small and curated, not a full dictionary, so not every real-world ambiguity is caught.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          }
+        ],
+        "asr": "i love kiwi so much"
+      },
+      "expected": {
+        "formatted": "I love kiwi so much.",
+        "memory_aware": "I love Kivi so much.",
+        "intervention_spans": [
+          "kiwi"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "I love kiwi so much.",
+        "memory_aware": "I love Kivi so much.",
+        "interventions": [
+          {
+            "span": "kiwi",
+            "applied": "Kivi",
+            "memory_id": 1,
+            "observed_form": "kiwi",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'kiwi' with 'Kivi' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.074280",
+          "last_updated": "2026-09-04T12:25:33.082306"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "kiwi",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.242,
+      "passed": true
+    },
+    {
+      "id": "case_variation_all_caps_012",
+      "category": "case_sensitivity",
+      "notes": "ALL-CAPS ASR still resolves correctly - the memory's own stored canonical casing ('Aaditya') is authoritative, not a re-casing of the ASR's own casing.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ASK ADITYA TO REVIEW NOW"
+      },
+      "expected": {
+        "formatted": "ASK ADITYA TO REVIEW NOW.",
+        "memory_aware": "ASK Aaditya TO REVIEW NOW.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "ASK ADITYA TO REVIEW NOW.",
+        "memory_aware": "ASK Aaditya TO REVIEW NOW.",
+        "interventions": [
+          {
+            "span": "ADITYA",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'ADITYA' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.102393",
+          "last_updated": "2026-09-04T12:25:33.110420"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.406,
+      "passed": true
+    },
+    {
+      "id": "case_variation_mixed_013",
+      "category": "case_sensitivity",
+      "notes": "Irregular mixed-case ASR must still normalize and match correctly.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "AdItYa is here"
+      },
+      "expected": {
+        "formatted": "AdItYa is here.",
+        "memory_aware": "Aaditya is here.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "AdItYa is here.",
+        "memory_aware": "Aaditya is here.",
+        "interventions": [
+          {
+            "span": "AdItYa",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'AdItYa' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.133525",
+          "last_updated": "2026-09-04T12:25:33.141523"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.156,
+      "passed": true
+    },
+    {
+      "id": "possessive_after_activation_014",
+      "category": "possessive_forms",
+      "notes": "Possessive 's must survive substitution, attached to the corrected form.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "this is aditya's presentation"
+      },
+      "expected": {
+        "formatted": "This is aditya's presentation.",
+        "memory_aware": "This is Aaditya's presentation.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "This is aditya's presentation.",
+        "memory_aware": "This is Aaditya's presentation.",
+        "interventions": [
+          {
+            "span": "aditya's",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya's' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.162180",
+          "last_updated": "2026-09-04T12:25:33.170334"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.405,
+      "passed": true
+    },
+    {
+      "id": "punctuation_adjacent_comma_015",
+      "category": "punctuation_adjacent_tokens",
+      "notes": "Comma immediately after the matched word must be preserved exactly, and the existing '?' must not get a spurious extra '.' appended.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "have you seen aditya, lately?"
+      },
+      "expected": {
+        "formatted": "Have you seen aditya, lately?",
+        "memory_aware": "Have you seen Aaditya, lately?",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Have you seen aditya, lately?",
+        "memory_aware": "Have you seen Aaditya, lately?",
+        "interventions": [
+          {
+            "span": "aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.192197",
+          "last_updated": "2026-09-04T12:25:33.200274"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.106,
+      "passed": true
+    },
+    {
+      "id": "punctuation_adjacent_parens_016",
+      "category": "punctuation_adjacent_tokens",
+      "notes": "Sentence-initial capitalization finds the first alphabetic character even inside parentheses; substitution must still preserve the surrounding punctuation exactly.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "(aditya) will present"
+      },
+      "expected": {
+        "formatted": "(Aditya) will present.",
+        "memory_aware": "(Aaditya) will present.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "(Aditya) will present.",
+        "memory_aware": "(Aaditya) will present.",
+        "interventions": [
+          {
+            "span": "Aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'Aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.221793",
+          "last_updated": "2026-09-04T12:25:33.229938"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.094,
+      "passed": true
+    },
+    {
+      "id": "punctuation_minimal_sentence_017",
+      "category": "punctuation_adjacent_tokens",
+      "notes": "Single-word utterance with its own terminal punctuation - must not gain a duplicate period.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "aditya."
+      },
+      "expected": {
+        "formatted": "Aditya.",
+        "memory_aware": "Aaditya.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Aditya.",
+        "memory_aware": "Aaditya.",
+        "interventions": [
+          {
+            "span": "Aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'Aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.250940",
+          "last_updated": "2026-09-04T12:25:33.258586"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.186,
+      "passed": true
+    },
+    {
+      "id": "multiword_entity_018",
+      "category": "multiword_entities",
+      "notes": "Two-token observed span ('yolk sity') matched and replaced with a two-token canonical form ('York City'), demonstrating multi-word memory entries beyond the brief's single-word example. 'new' -> 'New' is a separate, single-token mid-sentence recasing memory (same mechanism as brief_example_001's 'sarvam'); the diff can't tell it's part of the same proper noun without real entity extraction (documented follow-up work), but applying both still reconstructs 'New York City' correctly.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "flying to new yolk sity",
+            "corrected": "Flying to New York City"
+          },
+          {
+            "asr": "flying to new yolk sity",
+            "corrected": "Flying to New York City"
+          }
+        ],
+        "asr": "meeting is in new yolk sity tomorrow"
+      },
+      "expected": {
+        "formatted": "Meeting is in new yolk sity tomorrow.",
+        "memory_aware": "Meeting is in New York City tomorrow.",
+        "intervention_spans": [
+          "new",
+          "yolk sity"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Meeting is in new yolk sity tomorrow.",
+        "memory_aware": "Meeting is in New York City tomorrow.",
+        "interventions": [
+          {
+            "span": "new",
+            "applied": "New",
+            "memory_id": 1,
+            "observed_form": "new",
+            "entity_type": "other",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'new' with 'New' (memory #1, confidence 0.67, 2 observations)."
+          },
+          {
+            "span": "yolk sity",
+            "applied": "York City",
+            "memory_id": 2,
+            "observed_form": "yolk sity",
+            "entity_type": "other",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'yolk sity' with 'York City' (memory #2, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 2,
+          "observed_form": "yolk sity",
+          "canonical_form": "York City",
+          "entity_type": "other",
+          "token_count": 2,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.280854",
+          "last_updated": "2026-09-04T12:25:33.289316"
+        },
+        {
+          "id": 1,
+          "observed_form": "new",
+          "canonical_form": "New",
+          "entity_type": "other",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.279497",
+          "last_updated": "2026-09-04T12:25:33.289316"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "new",
+            "TP_useful_intervention"
+          ],
+          [
+            "yolk sity",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.469,
+      "passed": true
+    },
+    {
+      "id": "multiword_requires_exact_match_019",
+      "category": "multiword_entities",
+      "notes": "Known limitation, deliberately documented: multi-word spans only match by exact normalized text (no fuzzy tolerance implemented for span_len > 1), so 'york city' (already correctly spelled here, just lowercase) doesn't match the 'yolk sity' memory and stays untouched. The single-token 'new' -> 'New' memory matches independently and does apply, producing a partially-corrected, admittedly inconsistent-looking result - a known limitation of word-level (not phrase-level) memory, not a bug.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "flying to new yolk sity",
+            "corrected": "Flying to New York City"
+          },
+          {
+            "asr": "flying to new yolk sity",
+            "corrected": "Flying to New York City"
+          }
+        ],
+        "asr": "flying to new york city"
+      },
+      "expected": {
+        "formatted": "Flying to new york city.",
+        "memory_aware": "Flying to New york city.",
+        "intervention_spans": [
+          "new"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Flying to new york city.",
+        "memory_aware": "Flying to New york city.",
+        "interventions": [
+          {
+            "span": "new",
+            "applied": "New",
+            "memory_id": 1,
+            "observed_form": "new",
+            "entity_type": "other",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'new' with 'New' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 2,
+          "observed_form": "yolk sity",
+          "canonical_form": "York City",
+          "entity_type": "other",
+          "token_count": 2,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.314542",
+          "last_updated": "2026-09-04T12:25:33.322836"
+        },
+        {
+          "id": 1,
+          "observed_form": "new",
+          "canonical_form": "New",
+          "entity_type": "other",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.313518",
+          "last_updated": "2026-09-04T12:25:33.322836"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "new",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 4.926,
+      "passed": true
+    },
+    {
+      "id": "conflicting_evidence_020",
+      "category": "conflicting_evidence",
+      "notes": "Two competing corrections both reach 'active' with equal confidence (2 observations each); the more recently reinforced one ('Adithya') wins the tie-break, and the explanation flags that multiple candidates existed.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Adithya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Adithya now"
+          }
+        ],
+        "asr": "ask aditya to review"
+      },
+      "expected": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask Adithya to review.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask aditya to review.",
+        "memory_aware": "Ask Adithya to review.",
+        "interventions": [
+          {
+            "span": "aditya",
+            "applied": "Adithya",
+            "memory_id": 2,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya' with 'Adithya' (memory #2, confidence 0.67, 2 observations). Multiple candidate corrections existed; chose the highest-confidence one."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 2,
+          "observed_form": "aditya",
+          "canonical_form": "Adithya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.388978",
+          "last_updated": "2026-09-04T12:25:33.404510"
+        },
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.350406",
+          "last_updated": "2026-09-04T12:25:33.361933"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 7.367,
+      "passed": true
+    },
+    {
+      "id": "fuzzy_typo_accept_021",
+      "category": "fuzzy_typo_within_budget",
+      "notes": "'adithya' is a 1-edit-distance ASR typo of the learned 'aditya' - within the fuzzy-match budget for a 6-letter word, so it still resolves correctly.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ask adithya to review"
+      },
+      "expected": {
+        "formatted": "Ask adithya to review.",
+        "memory_aware": "Ask Aaditya to review.",
+        "intervention_spans": [
+          "aditya"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask adithya to review.",
+        "memory_aware": "Ask Aaditya to review.",
+        "interventions": [
+          {
+            "span": "adithya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "fuzzy",
+            "edit_distance": 1,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'adithya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.432549",
+          "last_updated": "2026-09-04T12:25:33.440539"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 6.989,
+      "passed": true
+    },
+    {
+      "id": "fuzzy_typo_reject_far_022",
+      "category": "fuzzy_typo_exceeds_budget",
+      "notes": "'rajesh' is far too different from 'aditya' (well beyond the edit-distance budget) - must NOT fuzzy-match; negative control against overly aggressive fuzzy matching.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          }
+        ],
+        "asr": "ask rajesh to review"
+      },
+      "expected": {
+        "formatted": "Ask rajesh to review.",
+        "memory_aware": "Ask rajesh to review.",
+        "intervention_spans": [],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask rajesh to review.",
+        "memory_aware": "Ask rajesh to review.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.469589",
+          "last_updated": "2026-09-04T12:25:33.478596"
+        }
+      ],
+      "classification": {
+        "span_results": [],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 4.232,
+      "passed": true
+    },
+    {
+      "id": "fuzzy_reject_short_word_023",
+      "category": "fuzzy_typo_exceeds_budget",
+      "notes": "Short words (<=4 letters) get zero fuzzy-match tolerance by design - too easy to false-positive on unrelated short words - so 'naya' does not fuzzy-match the learned 'nayha' even though they are only 1 edit apart.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          },
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          }
+        ],
+        "asr": "ask naya to join"
+      },
+      "expected": {
+        "formatted": "Ask naya to join.",
+        "memory_aware": "Ask naya to join.",
+        "intervention_spans": [],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask naya to join.",
+        "memory_aware": "Ask naya to join.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "nayha",
+          "canonical_form": "Neha",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.502837",
+          "last_updated": "2026-09-04T12:25:33.509824"
+        }
+      ],
+      "classification": {
+        "span_results": [],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.357,
+      "passed": true
+    },
+    {
+      "id": "name_diversity_024",
+      "category": "personal_names",
+      "notes": "A second, independent name-correction pair, for statistical diversity beyond the single 'aditya' example.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          },
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          }
+        ],
+        "asr": "ask nayha to join the call"
+      },
+      "expected": {
+        "formatted": "Ask nayha to join the call.",
+        "memory_aware": "Ask Neha to join the call.",
+        "intervention_spans": [
+          "nayha"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Ask nayha to join the call.",
+        "memory_aware": "Ask Neha to join the call.",
+        "interventions": [
+          {
+            "span": "nayha",
+            "applied": "Neha",
+            "memory_id": 1,
+            "observed_form": "nayha",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'nayha' with 'Neha' (memory #1, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "nayha",
+          "canonical_form": "Neha",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.531082",
+          "last_updated": "2026-09-04T12:25:33.538642"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "nayha",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.407,
+      "passed": true
+    },
+    {
+      "id": "name_diversity_already_correct_025",
+      "category": "already_correct_input",
+      "notes": "Already-correct guard exercised on a second entry, mid-sentence-independent (name happens to be sentence-initial here too).",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          },
+          {
+            "asr": "remind nayha tomorrow",
+            "corrected": "Remind Neha tomorrow"
+          }
+        ],
+        "asr": "Neha will join the call"
+      },
+      "expected": {
+        "formatted": "Neha will join the call.",
+        "memory_aware": "Neha will join the call.",
+        "intervention_spans": [],
+        "no_intervention_spans": [
+          "nayha"
+        ]
+      },
+      "actual": {
+        "formatted": "Neha will join the call.",
+        "memory_aware": "Neha will join the call.",
+        "interventions": [],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 1,
+          "observed_form": "nayha",
+          "canonical_form": "Neha",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.559463",
+          "last_updated": "2026-09-04T12:25:33.567274"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "nayha",
+            "TN_no_candidate"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.76,
+      "passed": true
+    },
+    {
+      "id": "multiple_active_memories_one_sentence_026",
+      "category": "multiple_memories_same_sentence",
+      "notes": "Two independent active memories in one sentence, both correctly applied without interfering with each other.",
+      "inputs": {
+        "observations": [
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "call aditya now",
+            "corrected": "Call Aaditya now"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          },
+          {
+            "asr": "the kiwi app crashed again",
+            "corrected": "The Kivi app crashed again"
+          }
+        ],
+        "asr": "tell aditya the kiwi app is fixed"
+      },
+      "expected": {
+        "formatted": "Tell aditya the kiwi app is fixed.",
+        "memory_aware": "Tell Aaditya the Kivi app is fixed.",
+        "intervention_spans": [
+          "aditya",
+          "kiwi"
+        ],
+        "no_intervention_spans": []
+      },
+      "actual": {
+        "formatted": "Tell aditya the kiwi app is fixed.",
+        "memory_aware": "Tell Aaditya the Kivi app is fixed.",
+        "interventions": [
+          {
+            "span": "aditya",
+            "applied": "Aaditya",
+            "memory_id": 1,
+            "observed_form": "aditya",
+            "entity_type": "person",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'aditya' with 'Aaditya' (memory #1, confidence 0.67, 2 observations)."
+          },
+          {
+            "span": "kiwi",
+            "applied": "Kivi",
+            "memory_id": 2,
+            "observed_form": "kiwi",
+            "entity_type": "product",
+            "match_type": "exact",
+            "edit_distance": 0,
+            "confidence": 0.667,
+            "evidence_count": 2,
+            "reason": "active_memory_high_confidence",
+            "explanation": "Replaced 'kiwi' with 'Kivi' (memory #2, confidence 0.67, 2 observations)."
+          }
+        ],
+        "non_interventions": []
+      },
+      "memory_state": [
+        {
+          "id": 2,
+          "observed_form": "kiwi",
+          "canonical_form": "Kivi",
+          "entity_type": "product",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.603935",
+          "last_updated": "2026-09-04T12:25:33.614934"
+        },
+        {
+          "id": 1,
+          "observed_form": "aditya",
+          "canonical_form": "Aaditya",
+          "entity_type": "person",
+          "token_count": 1,
+          "evidence_count": 2,
+          "confidence": 0.667,
+          "active": true,
+          "created_at": "2026-09-04T12:25:33.588386",
+          "last_updated": "2026-09-04T12:25:33.596385"
+        }
+      ],
+      "classification": {
+        "span_results": [
+          [
+            "aditya",
+            "TP_useful_intervention"
+          ],
+          [
+            "kiwi",
+            "TP_useful_intervention"
+          ]
+        ],
+        "formatted_correct": true,
+        "output_correct": true,
+        "passed": true
+      },
+      "latency_ms": 3.214,
+      "passed": true
+    }
+  ]
+}

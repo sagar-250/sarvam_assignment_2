@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+data/kivi_memory.db
+eval/results/*.tmp
+eval/results/_eval_run.db
+eval/results/_simulation_run.db
+.pytest_cache/
+*.egg-info/
+.playwright-mcp/

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kivi Memory Demo</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; background: #fafaf7; color: #1c1c1c; }
+  h1 { font-size: 20px; margin-bottom: 4px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 24px; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill.ok { background: #dcf5e0; color: #1e7a34; }
+  .pill.err { background: #fbdcdc; color: #a11; }
+  section { background: #fff; border: 1px solid #e5e2da; border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+  section h2 { font-size: 15px; margin: 0 0 12px; }
+  textarea, input[type=text] { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 13px; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 8px; }
+  textarea { min-height: 54px; resize: vertical; }
+  button { background: #2e6b3e; color: #fff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; }
+  button.secondary { background: #888; }
+  button.danger { background: #a83232; }
+  button:hover { opacity: 0.9; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
+  th { color: #666; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  .status-active { color: #1e7a34; font-weight: 600; }
+  .status-candidate { color: #a67c00; }
+  .row-result { font-size: 12.5px; margin: 3px 0; padding: 4px 8px; border-radius: 5px; }
+  .row-result.learned { background: #eef7ee; }
+  .row-result.skipped { background: #f2f2f2; color: #777; }
+  .out-line { font-size: 14px; padding: 10px 12px; background: #f6f5f0; border-radius: 6px; margin-bottom: 6px; }
+  .out-line b { color: #1c1c1c; }
+  .explain { font-size: 12.5px; margin: 4px 0; padding: 6px 10px; border-radius: 5px; }
+  .explain.intervene { background: #eef7ee; border-left: 3px solid #2e6b3e; }
+  .explain.no_intervene { background: #f2f2f2; border-left: 3px solid #999; color: #555; }
+  mark { background: #d5f0da; padding: 0 2px; border-radius: 3px; }
+  .row-actions button { padding: 2px 8px; font-size: 11px; }
+  .filters { margin-bottom: 8px; }
+  .filters select { font-size: 12px; padding: 3px 6px; }
+  .mode-tabs { font-size: 13px; }
+  .mode-tabs label { cursor: pointer; }
+  footer { font-size: 11px; color: #999; text-align: center; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<h1>Kivi &mdash; Phonetic Memory Demo <span id="health" class="pill">checking&hellip;</span></h1>
+<div class="sub">Teach it personal words from corrections, inspect what it remembers, then try new transcripts and see why it did or didn't intervene.</div>
+
+<section>
+  <h2>1. Teach Kivi</h2>
+  <label>ASR output (raw, as heard)</label>
+  <textarea id="obs-asr" placeholder="ask aditya to review the sarvam kiwi service"></textarea>
+  <label>Corrected output (what it should have been)</label>
+  <textarea id="obs-corrected" placeholder="Ask Aaditya to review the Sarvam Kivi service."></textarea>
+  <button id="btn-learn">Learn</button>
+  <div id="learn-result" style="margin-top:10px;"></div>
+</section>
+
+<section>
+  <h2>2. Memory State</h2>
+  <div class="filters">
+    <label><input type="checkbox" id="active-only"> active only</label>
+  </div>
+  <table id="memory-table">
+    <thead><tr><th>Observed</th><th>Canonical</th><th>Type</th><th>Status</th><th>Evidence</th><th>Confidence</th><th></th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section>
+  <h2>3. Try a Transcript</h2>
+  <label>ASR output</label>
+  <textarea id="run-asr" placeholder="ask aditya to review the sarvam kiwi service"></textarea>
+  <button id="btn-run">Run</button>
+
+  <div id="run-result" style="margin-top:14px;"></div>
+</section>
+
+<section>
+  <h2>4. Bulk Teach (from existing corrected data)</h2>
+  <p style="font-size:12px;color:#666;margin-top:-6px;">Use whichever form your historical data is in.</p>
+  <div class="mode-tabs" style="margin-bottom:10px;">
+    <label><input type="radio" name="bulk-mode" id="bulk-mode-pairs" value="pairs" checked> Corrected pairs (asr + corrected)</label>
+    <label style="margin-left:16px;"><input type="radio" name="bulk-mode" id="bulk-mode-conversations" value="conversations"> Corrected text only</label>
+  </div>
+
+  <div id="bulk-mode-pairs-panel">
+    <p style="font-size:12px;color:#666;margin-top:0;">One JSON object per line: <code>{"asr": "...", "corrected": "..."}</code></p>
+    <textarea id="bulk-pairs" placeholder='{"asr": "call rohan now", "corrected": "Call Rohan now"}&#10;{"asr": "call rohan now", "corrected": "Call Rohan now"}' style="min-height:100px;"></textarea>
+  </div>
+
+  <div id="bulk-mode-conversations-panel" hidden>
+    <p style="font-size:12px;color:#666;margin-top:0;">Paste one or more already-correct conversation transcripts, separated by a blank line. No raw ASR needed - a free, offline NER model finds the personal entities worth remembering, refined by an LLM if <code>MISTRAL_KEY</code>/<code>NVIDIA_KEY</code> is configured (optional).</p>
+    <textarea id="bulk-conversations" placeholder="Meet Aaditya tomorrow to discuss the Kivi launch.&#10;&#10;Aaditya confirmed the Kivi rollout for next week." style="min-height:100px;"></textarea>
+  </div>
+
+  <button id="btn-bulk-learn">Learn All</button>
+  <div id="bulk-learn-result" style="margin-top:10px;"></div>
+</section>
+
+<section>
+  <h2>Reset</h2>
+  <p style="font-size:13px;color:#666;">Clears all memory and evidence so you can repeat the learning journey from scratch.</p>
+  <button class="danger" id="btn-reset">Reset system</button>
+</section>
+
+<footer>Formatter: rule-based (deterministic), no LLM calls by default.</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
