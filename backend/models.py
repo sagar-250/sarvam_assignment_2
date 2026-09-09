@@ -28,6 +28,7 @@ class Memory(Base):
         UniqueConstraint("observed_form", "canonical_form", name="ux_memory_observed_canonical"),
         Index("ix_memory_observed_form", "observed_form"),
         Index("ix_memory_active", "active"),
+        Index("ix_memory_token_observed", "token_count", "observed_form"),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)

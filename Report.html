@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kivi: Phonetic Word Memory</title>
+<style>
+  @page { size: A4; margin: 14mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: #1f2430;
+    font-size: 9.3pt;
+    line-height: 1.45;
+    margin: 0;
+  }
+  h1 { font-size: 17pt; margin: 0 0 2px 0; }
+  .subtitle { color: #5b6270; font-size: 9pt; margin: 0 0 10px 0; }
+  .badges { white-space: nowrap; margin-top: 2px; }
+  .badge {
+    display: inline-block; background: #eaf6ee; color: #1f6b3a; border: 1px solid #bfe3cc;
+    border-radius: 999px; padding: 3px 10px; font-size: 8pt; font-weight: 600; margin-left: 6px;
+  }
+  .header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    border-bottom: 2px solid #1f6b3a; padding-bottom: 8px; margin-bottom: 10px;
+  }
+  .header-title { flex: 1; }
+  .intro { margin: 0 0 12px 0; }
+  h2 { font-size: 11pt; margin: 16px 0 6px 0; border-left: 4px solid #1f6b3a; padding-left: 8px; }
+  h2.first { margin-top: 4px; }
+  .stages { display: flex; gap: 10px; margin-bottom: 10px; }
+  .stage { flex: 1; border: 1px solid #d7dbe0; border-radius: 6px; padding: 8px; background: #fafbfc; }
+  .stage-label { font-size: 7.3pt; font-weight: 700; color: #1f6b3a; text-transform: uppercase; letter-spacing: .03em; }
+  .stage-title { font-weight: 700; font-size: 9.3pt; margin: 2px 0 4px 0; }
+  .stage-desc { color: #5b6270; font-size: 8pt; margin-bottom: 6px; }
+  code, .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+  .mono-block {
+    background: #f4f8f5; border: 1px solid #d7e6db; border-radius: 6px; padding: 7px 9px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 7.6pt; white-space: pre; overflow-x: auto; margin: 6px 0 10px 0; color: #2a3038;
+  }
+  .pipeline-box code { background: #eef3ef; border-radius: 3px; padding: 1px 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 12px 0; font-size: 8.3pt; }
+  th, td { border: 1px solid #d7dbe0; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #f0f2f4; font-weight: 700; }
+  .side-note {
+    border: 1px solid #d7e6db; background: #f7fbf8; border-radius: 6px; padding: 8px 10px; font-size: 8.2pt;
+  }
+  .two-col { display: flex; gap: 14px; }
+  .two-col > div { flex: 1; }
+  .cap-table td { font-size: 8.1pt; }
+  ul.limits { margin: 4px 0; padding-left: 16px; }
+  ul.limits li { margin-bottom: 6px; }
+  .footer { border-top: 1px solid #d7dbe0; margin-top: 14px; padding-top: 6px; color: #5b6270; font-size: 7.6pt; }
+  .page-break { break-before: page; page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">
+    <h1>Kivi: Phonetic Word Memory</h1>
+    <div class="subtitle">&ldquo;The Words Kivi Keeps&rdquo; - Sarvam Backend-Focused Full Stack take-home</div>
+  </div>
+  <div class="badges">
+    <span class="badge">26/26 eval</span>
+    <span class="badge">67/67 tests</span>
+    <span class="badge">P/R/F1 = 1.0</span>
+  </div>
+</div>
+
+<p class="intro">A word-level memory system for Kivi's dictation pipeline. It learns personal terms (names, products, places) from the corrections a user makes, and applies that memory to fix the same terms later - but only once a correction has been genuinely confirmed twice, never off a single guess.</p>
+
+<h2 class="first">How it works: three transcript stages</h2>
+<div class="stages">
+  <div class="stage">
+    <div class="stage-label">Stage 1</div>
+    <div class="stage-title">ASR output</div>
+    <div class="stage-desc">Raw speech-to-text, as heard.</div>
+    <div class="mono-block">ask aditya to review the sarvam kiwi service</div>
+  </div>
+  <div class="stage">
+    <div class="stage-label">Stage 2</div>
+    <div class="stage-title">Formatted output</div>
+    <div class="stage-desc">Sentence-cased + punctuated. Deterministic, no NER/LLM.</div>
+    <div class="mono-block">Ask aditya to review the sarvam kiwi service.</div>
+  </div>
+  <div class="stage">
+    <div class="stage-label">Stage 3</div>
+    <div class="stage-title">Memory-aware output</div>
+    <div class="stage-desc">Personal terms corrected using confirmed memory.</div>
+    <div class="mono-block">Ask Aaditya to review the sarvam Kivi service.</div>
+  </div>
+</div>
+
+<h2>How a transcript gets corrected (Stage 2 &rarr; 3, at request time)</h2>
+<div class="mono-block pipeline-box">tokenize()        &rarr;  retrieve()         &rarr;  decide()          &rarr;  apply()
+  |                     |                      |                     |
+splits into words,   finds exact + fuzzy   4 rules pick          substitutes only
+keeps offsets &amp;       candidate memories    intervene vs.         the decided spans,
+casing                (routed by table       leave-alone,          keeps whitespace/
+                       size - see below)      w/ a reason           punctuation exact</div>
+<p>The 4 decision rules, in order: <b>(1)</b> already correct &rarr; leave alone. <b>(2)</b> memory not yet <code>active</code> (needs 2 confirmations) &rarr; leave alone. <b>(3)</b> a small hand-curated list of ambiguous common words (e.g. &ldquo;apple&rdquo;) needs a nearby supporting cue (&ldquo;stock&rdquo;, &ldquo;Inc&rdquo;) before applying. <b>(4)</b> conflicting active memories for the same span &rarr; highest confidence wins. Every decision returns a human-readable <code>reason</code> + <code>explanation</code>, whether it acted or not.</p>
+
+<h2>How a memory gets learned (three independent ways in, one shared core)</h2>
+<div class="two-col">
+  <div style="flex: 1.3;">
+    <table>
+      <tr><th>Path</th><th>Input</th><th>Mechanism</th></tr>
+      <tr><td>Teach one pair</td><td>1 (asr, corrected)</td><td>Diff formatted vs. corrected</td></tr>
+      <tr><td>Bulk pairs</td><td>many (asr, corrected)</td><td>Same diff, looped</td></tr>
+      <tr><td>Bulk conversations</td><td>correct text only, no ASR</td><td>NER (free) + optional LLM refine</td></tr>
+    </table>
+  </div>
+  <div style="flex: 1;">
+    <div class="side-note"><b>Confidence:</b> <code>min(1.0, evidence_count / 3)</code>. A memory only applies once <code>evidence_count &ge; 2</code> AND <code>confidence &ge; 0.6</code> - both cross at exactly the same point, so they can't disagree. One correction is never enough on its own; it could be a typo.</div>
+  </div>
+</div>
+
+<h2>NER + LLM hybrid, verified not assumed</h2>
+<p>For &ldquo;corrected text only&rdquo; input there's no wrong/right pair to diff, so entities must be <i>extracted</i>. spaCy NER runs first - free, offline, no API key. An LLM pass refines it only if credentials happen to be configured; a missing key is treated as normal, not an error. Real, measured result on one sentence:</p>
+<table>
+  <tr><th>Entity</th><th>Found by</th><th>Why</th></tr>
+  <tr><td><code>Kivi</code>, <code>Bengaluru</code></td><td>NER and LLM</td><td>Ordinary place/org patterns spaCy recognizes reliably</td></tr>
+  <tr><td><code>Aaditya</code>, <code>Sarvam</code></td><td>LLM only</td><td>Invented/unusual spellings - exactly spaCy's verified recall gap</td></tr>
+</table>
+<p>This is why the LLM stays a <i>refinement</i>, not a requirement: with only the NER model installed (one-time, free download), this mode already works with zero LLM credentials.</p>
+
+<h2>What it can tell apart (26 eval cases, beyond the one worked example)</h2>
+<table class="cap-table">
+  <tr><td>Needs 2 confirmations before acting</td><td>Leaves already-correct text alone</td></tr>
+  <tr><td>Blocks ambiguous words without supporting context (&ldquo;apple&rdquo;)</td><td>&hellip;but allows it once context appears (&ldquo;Apple&rdquo; + &ldquo;stock&rdquo;)</td></tr>
+  <tr><td>Doesn't over-gate ordinary words not on the ambiguity list (&ldquo;kiwi&rdquo;)</td><td>Handles ALL-CAPS / mixed-case ASR</td></tr>
+  <tr><td>Handles possessives (&ldquo;aditya's&rdquo;)</td><td>Handles multi-word entities (&ldquo;yolk sity&rdquo; &rarr; &ldquo;York City&rdquo;)</td></tr>
+  <tr><td>Fuzzy-matches small ASR typos within a budget</td><td>&hellip;but never matches unrelated/very short words</td></tr>
+  <tr><td>Resolves conflicting evidence toward the most recent</td><td>Applies multiple memories correctly in one sentence</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2 class="first">Architecture</h2>
+<div class="mono-block">Browser (frontend/, vanilla JS) -&gt; FastAPI (backend/app.py, routes.py)
++-- POST /observe(/bulk)            -&gt; diff.py -&gt; memory_service.py -&gt; SQLite
++-- POST /learn-from-conversations  -&gt; ner_extraction.py + entity_extraction.py (LLM, optional)
++-- POST /run                       -&gt; formatter -&gt; tokenizer -&gt; retrieval -&gt; decision -&gt; apply
++-- GET/DELETE /memories, POST /reset</div>
+<p>Two tables: <code>memory</code> (one row per learned pair, <code>UNIQUE(observed_form, canonical_form)</code>) and <code>evidence</code> (append-only log, <code>source_type</code> = <code>observed_pair</code> or <code>conversation_extraction</code> - every memory's full history is inspectable, not just its current state).</p>
+
+<h2>Retrieval performance at scale (added after initial submission)</h2>
+<p><code>backend/retrieval.py</code> now routes to one of two matching strategies based on memory-table size, instead of always scanning every row:</p>
+<table>
+  <tr><th>Memory rows</th><th>Strategy</th><th>5-transcript <code>retrieve()</code>, 50k-row test</th></tr>
+  <tr><td>&le; <code>RETRIEVAL_SMALL_TABLE_THRESHOLD</code> (2,000)</td><td>Bulk load once, match in Python - the original design</td><td>within ~2x of the original at small sizes</td></tr>
+  <tr><td>&gt; 2,000</td><td>Exact match batched into indexed SQL queries; fuzzy match via a cached symmetric-delete (SymSpell) index instead of a Levenshtein scan against every row</td><td>up to 106x faster than always-brute-force at 50,000 rows</td></tr>
+</table>
+<p>Measured in <code>eval/benchmark_retrieval.py</code>, which reproduces the original pre-optimization algorithm for a like-for-like comparison at 100 / 1,000 / 5,000 / 20,000 / 50,000 memory rows. <code>tests/test_retrieval_router.py</code> asserts both strategies return identical candidates on the same input.</p>
+
+<h2>Limitations (known and deliberate)</h2>
+<div class="two-col">
+  <div>
+    <ul class="limits">
+      <li><b>Multi-word spans match exactly</b> - no fuzzy tolerance for spans &gt; 1 token.</li>
+      <li><b>A taught multi-word entity can fragment</b> into separate single/multi-word memories, since diffing has no real entity extraction. Mitigated (optional): an LLM grouping pass can merge them when credentials are set.</li>
+      <li><b>Ambiguous-word stoplist is small and hand-curated</b>, not a full dictionary - deliberately, to avoid over-gating ordinary product names.</li>
+    </ul>
+  </div>
+  <div>
+    <ul class="limits">
+      <li><b>No automatic decay</b> for superseded memories; conflicting evidence competes at retrieval time instead. Manual delete is the &ldquo;forget&rdquo; control.</li>
+      <li><b>Entity-type inference is a coarse heuristic</b> (nearby cue words), not real NER, in the core diff path.</li>
+      <li><b>Single-user, SQLite only</b> - out of scope per the brief's own &ldquo;smallest system&rdquo; framing.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Design decisions, in brief</h2>
+<table>
+  <tr><th>Decision</th><th>Why</th></tr>
+  <tr><td>Formatter stays deliberately minimal (no NER)</td><td>Assignment scope is phonetic memory, not general formatting - the gap is intentional, memory fills it</td></tr>
+  <tr><td>Deterministic substitution, not LLM prompt-injection</td><td>Part Two needs byte-exact, reproducible evaluation</td></tr>
+  <tr><td>No Alembic</td><td>One schema version for this scope; idempotent <code>CREATE TABLE</code> is enough</td></tr>
+  <tr><td>No mandatory LLM key anywhere in the primary path</td><td>Brief requires zero-credential review; NER hybrid extends this to bulk-conversation import too</td></tr>
+  <tr><td>Retrieval strategy routed by table size, not a single fixed algorithm</td><td>An indexed/SymSpell strategy only pays off once memory is large; below that, in-memory scanning is genuinely faster - caught by benchmarking both, not assumed</td></tr>
+</table>
+
+<div class="footer">Full detail, rationale, and verified findings for every claim above: <code>README.md</code> and <code>RUN.md</code> in the repository. Built by me with Claude Code; every number cited here was actually executed and checked in-session, not asserted from memory.</div>
+
+</body>
+</html>
