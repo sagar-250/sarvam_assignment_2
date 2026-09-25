@@ -42,7 +42,19 @@ def _context_tokens(tokens: list[Token], start_idx: int, end_idx: int) -> list[T
     return before + after
 
 
-def decide(tokens: list[Token], candidates: list[Candidate]) -> list[Decision]:
+def decide(tokens: list[Token], candidates: list[Candidate], full_text: str | None = None) -> list[Decision]:
+    # NER-based ambiguous-word gate (off by default, config.KIVI_NER_AMBIGUOUS_
+    # GATE_ENABLED). One model call for the whole request, not one per
+    # candidate span - reused below for every COMMON_WORD_CUES check in this
+    # transcript. Empty list (NER off, unavailable, or full_text not passed)
+    # falls back to the existing cue-word check unchanged.
+    ner_spans: list[tuple[int, int, str]] = []
+    if config.KIVI_NER_AMBIGUOUS_GATE_ENABLED and full_text is not None:
+        from backend.onnx_ner import extract_entity_spans, onnx_ner_available
+
+        if onnx_ner_available():
+            ner_spans = extract_entity_spans(full_text)
+
     groups: dict[tuple[int, int], list[Candidate]] = {}
     for c in candidates:
         groups.setdefault((c.start_idx, c.end_idx), []).append(c)
@@ -111,8 +123,20 @@ def decide(tokens: list[Token], candidates: list[Candidate]) -> list[Decision]:
 
         cue_cfg = COMMON_WORD_CUES.get(best.observed_form)
         if cue_cfg and best.entity_type in cue_cfg["entity_types"]:
-            nearby_norms = {t.norm for t in _context_tokens(tokens, start_idx, end_idx)}
-            if not (nearby_norms & cue_cfg["cues"]):
+            if ner_spans:
+                # Live containment+type check instead of a fixed cue-word
+                # set: is this exact span covered by an NER entity of a type
+                # that matches what cue_cfg expects (mapped to onnx_ner's
+                # "product" label - see onnx_ner.CONLL_LABEL_MAP)?
+                span_start, span_end = span_tokens[0].start, span_tokens[-1].end
+                supported = any(
+                    start <= span_start and span_end <= end and entity_type == "product"
+                    for start, end, entity_type in ner_spans
+                )
+            else:
+                nearby_norms = {t.norm for t in _context_tokens(tokens, start_idx, end_idx)}
+                supported = bool(nearby_norms & cue_cfg["cues"])
+            if not supported:
                 decisions.append(
                     Decision(
                         kind="no_intervene",
