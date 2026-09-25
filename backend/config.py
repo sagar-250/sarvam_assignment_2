@@ -44,3 +44,10 @@ KIVI_ONNX_NER_DIR = os.environ.get("KIVI_ONNX_NER_DIR", str(BASE_DIR / "models" 
 # Off by default - one extra model call per /run request (not per candidate,
 # see decision.py) only when there's an ambiguous-word candidate to check.
 KIVI_NER_AMBIGUOUS_GATE_ENABLED = os.environ.get("KIVI_NER_AMBIGUOUS_GATE_ENABLED", "false").lower() == "true"
+
+# Optional: use the ONNX NER backend to decide adjacent-pair grouping
+# (grouping.py), for free and without credentials, ahead of the LLM path.
+# Scoped deliberately narrow - see grouping.py for why only person-type
+# merges are trusted from this signal; everything else falls through to the
+# LLM path (if enabled) or stays separate, same as today.
+KIVI_NER_GROUPING_ENABLED = os.environ.get("KIVI_NER_GROUPING_ENABLED", "false").lower() == "true"

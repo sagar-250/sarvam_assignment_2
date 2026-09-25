@@ -1,9 +1,17 @@
-"""Optional, off-by-default LLM pass that merges adjacent word-level
-corrections into one multi-word entity when they belong together (e.g. "new"
-+ "yolk sity" -> "New York City"), while leaving genuinely unrelated adjacent
-corrections separate (e.g. "sarvam" + "kiwi"). Gated on
-config.KIVI_LLM_GROUPING_ENABLED and real credentials; a no-op otherwise, so
-the primary zero-credential path is never affected."""
+"""Optional passes that merge adjacent word-level corrections into one
+multi-word entity when they belong together (e.g. "new" + "yolk sity" ->
+"New York City"), while leaving genuinely unrelated adjacent corrections
+separate (e.g. "sarvam" + "kiwi"). Two independent backends, both off by
+default and both no-ops on the primary zero-credential path:
+
+- ONNX NER (config.KIVI_NER_GROUPING_ENABLED): free, no credentials, tried
+  first. Only trusted for person-name merges - see
+  onnx_ner.should_merge_combined_span for why product/place merges from this
+  signal are deliberately never auto-applied.
+- LLM (config.KIVI_LLM_GROUPING_ENABLED): the fallback for everything NER
+  doesn't confidently resolve - actual semantic judgment for the cases that
+  need it (is this one brand or two), not just span-boundary detection.
+"""
 from backend import config
 from backend.diff import ObservationPair
 from backend.llm_client import LLMCredentialsMissingError, chat_json
@@ -47,14 +55,40 @@ def _ask_llm_should_merge(a: ObservationPair, b: ObservationPair, corrected_text
     return merge, entity_type
 
 
+def _try_ner_merge(a: ObservationPair, b: ObservationPair, corrected_text: str) -> tuple[bool, str, bool]:
+    """Returns (should_merge, entity_type, decided). decided=True means NER
+    had an opinion worth trusting (a person-name merge, or a covering span of
+    a type we don't auto-merge - either way, no need to also ask the LLM);
+    decided=False means NER found nothing here and the caller should fall
+    through to the LLM path unchanged."""
+    from backend.onnx_ner import onnx_ner_available, should_merge_combined_span
+
+    if not onnx_ner_available():
+        return False, "other", False
+
+    combined_text = f"{a.canonical_form} {b.canonical_form}"
+    combined_start = corrected_text.find(combined_text)
+    if combined_start == -1:
+        return False, "other", False
+
+    should_merge, entity_type = should_merge_combined_span(
+        combined_start, combined_start + len(combined_text), corrected_text
+    )
+    if entity_type is None:
+        return False, "other", False  # no covering entity at all - let the LLM path decide
+    return should_merge, (entity_type or "other"), True
+
+
 def maybe_group_adjacent_pairs(
     pairs: list[ObservationPair], corrected_text: str
 ) -> tuple[list[ObservationPair], bool]:
-    """Ask the LLM about each pair of adjacent-in-text corrections and merge
-    the ones it says form one entity. Returns (possibly-merged pairs, whether
-    an LLM call was attempted). Any failure - flag off, no credentials,
-    malformed output, network error - falls back to `pairs` unchanged."""
-    if not config.KIVI_LLM_GROUPING_ENABLED or len(pairs) < 2:
+    """Try to merge each pair of adjacent-in-text corrections that belong
+    together, NER first (free, person-names only - see module docstring),
+    then the LLM (if enabled) for anything NER didn't resolve. Returns
+    (possibly-merged pairs, whether an LLM call was attempted). Any LLM
+    failure - flag off, no credentials, malformed output, network error -
+    falls back to `pairs` unchanged for that pair."""
+    if (not config.KIVI_NER_GROUPING_ENABLED and not config.KIVI_LLM_GROUPING_ENABLED) or len(pairs) < 2:
         return pairs, False
 
     merged: list[ObservationPair] = []
@@ -65,13 +99,20 @@ def maybe_group_adjacent_pairs(
             a, b = pairs[i], pairs[i + 1]
             combined_token_count = a.token_count + b.token_count
             if combined_token_count <= config.MAX_SPAN_TOKENS:
-                try:
-                    attempted = True
-                    should_merge, entity_type = _ask_llm_should_merge(a, b, corrected_text)
-                except LLMCredentialsMissingError:
-                    return pairs, False
-                except Exception:  # noqa: BLE001 - never let a grouping failure break learning
-                    should_merge, entity_type = False, "other"
+                should_merge, entity_type, decided = False, "other", False
+
+                if config.KIVI_NER_GROUPING_ENABLED:
+                    should_merge, entity_type, decided = _try_ner_merge(a, b, corrected_text)
+
+                if not decided and config.KIVI_LLM_GROUPING_ENABLED:
+                    try:
+                        attempted = True
+                        should_merge, entity_type = _ask_llm_should_merge(a, b, corrected_text)
+                    except LLMCredentialsMissingError:
+                        return pairs, False
+                    except Exception:  # noqa: BLE001 - never let a grouping failure break learning
+                        should_merge, entity_type = False, "other"
+
                 if should_merge:
                     merged.append(
                         ObservationPair(

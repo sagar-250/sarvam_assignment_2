@@ -95,3 +95,25 @@ def extract_entity_spans(text: str) -> list[tuple[int, int, str]]:
             continue
         spans.append((r["start"], r["end"], entity_type))
     return spans
+
+
+def should_merge_combined_span(combined_start: int, combined_end: int, text: str) -> tuple[bool, str | None]:
+    """Is [combined_start, combined_end) - the text of two adjacent diff
+    pairs joined together - covered by a SINGLE NER entity span? Used by
+    grouping.py to decide whether two adjacent corrections are one
+    multi-word entity.
+
+    Only ever returns should_merge=True for entity_type == "person": full
+    name + surname merging was verified reliable (10/10 across varied
+    sentence patterns), but brand/product-pair merging was verified
+    UNRELIABLE - the same model merged "Sarvam Kivi" into one entity (wrong
+    for this system) while splitting the real compound name "Google Pixel"
+    into two, inconsistently, in the same test run. So a covering ORG/
+    PRODUCT/PLACE span is reported back (the caller may still want to know
+    NER saw *something* here) but never auto-trusted to merge - that
+    decision stays with the LLM path (if enabled) or stays unmerged, same as
+    before this backend existed."""
+    for start, end, entity_type in extract_entity_spans(text):
+        if start <= combined_start and combined_end <= end:
+            return entity_type == "person", entity_type
+    return False, None
