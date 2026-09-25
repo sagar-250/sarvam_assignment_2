@@ -35,16 +35,26 @@ CONLL_LABEL_MAP = {
 @lru_cache(maxsize=1)
 def _load_pipeline():
     try:
+        import onnxruntime as ort
         from optimum.onnxruntime import ORTModelForTokenClassification
         from transformers import AutoTokenizer, pipeline
     except ImportError:
         return None
     try:
+        # One intra-op thread: on hybrid P/E-core CPUs onnxruntime's default
+        # thread pool measured ~8x slower than single-threaded for these
+        # short inputs (~600ms vs ~74ms per call).
+        session_options = ort.SessionOptions()
+        session_options.intra_op_num_threads = 1
         model = ORTModelForTokenClassification.from_pretrained(
-            config.KIVI_ONNX_NER_DIR, file_name="model_quantized.onnx"
+            config.KIVI_ONNX_NER_DIR, file_name="model_quantized.onnx", session_options=session_options
         )
         tokenizer = AutoTokenizer.from_pretrained(config.KIVI_ONNX_NER_DIR)
-        return pipeline("ner", model=model, tokenizer=tokenizer, aggregation_strategy="simple")
+        # "first" aggregates at word level. "simple" groups sub-word tokens
+        # by their B-/I- tags, and this model often tags word pieces B-, so it
+        # returned fragments like "V" + "ik" + "ram Chowdh" for "Vikram
+        # Chowdhury" - no single span covering the full name.
+        return pipeline("ner", model=model, tokenizer=tokenizer, aggregation_strategy="first")
     except Exception:  # noqa: BLE001 - missing/broken export dir, fail soft like ner_extraction does
         return None
 
@@ -97,23 +107,23 @@ def extract_entity_spans(text: str) -> list[tuple[int, int, str]]:
     return spans
 
 
-def should_merge_combined_span(combined_start: int, combined_end: int, text: str) -> tuple[bool, str | None]:
-    """Is [combined_start, combined_end) - the text of two adjacent diff
-    pairs joined together - covered by a SINGLE NER entity span? Used by
-    grouping.py to decide whether two adjacent corrections are one
-    multi-word entity.
+# Entity types whose covering span is trusted to merge adjacent corrections
+# into one memory. On the eval/ner_benchmark.py sentences (int8, cased text)
+# person full names came back as one span 9/10 and multi-word places (New
+# York City, Los Angeles, Abu Dhabi, San Francisco, Hong Kong, Kuala Lumpur)
+# every time. ORG/"product" is deliberately excluded: the model merged
+# "Sarvam Kivi" into one ORG/MISC span, which is wrong for this system -
+# two separate products that happen to sit next to each other.
+MERGEABLE_ENTITY_TYPES = {"person", "place"}
 
-    Only ever returns should_merge=True for entity_type == "person": full
-    name + surname merging was verified reliable (10/10 across varied
-    sentence patterns), but brand/product-pair merging was verified
-    UNRELIABLE - the same model merged "Sarvam Kivi" into one entity (wrong
-    for this system) while splitting the real compound name "Google Pixel"
-    into two, inconsistently, in the same test run. So a covering ORG/
-    PRODUCT/PLACE span is reported back (the caller may still want to know
-    NER saw *something* here) but never auto-trusted to merge - that
-    decision stays with the LLM path (if enabled) or stays unmerged, same as
-    before this backend existed."""
+
+def should_merge_combined_span(combined_start: int, combined_end: int, text: str) -> tuple[bool, str | None]:
+    """Is [combined_start, combined_end) - the text of adjacent diff pairs
+    joined together - covered by a SINGLE NER entity span of a type in
+    MERGEABLE_ENTITY_TYPES? Used by grouping.py to decide whether adjacent
+    corrections are one multi-word entity. Returns (should_merge,
+    covering_entity_type); the type is None when no span covers it at all."""
     for start, end, entity_type in extract_entity_spans(text):
         if start <= combined_start and combined_end <= end:
-            return entity_type == "person", entity_type
+            return entity_type in MERGEABLE_ENTITY_TYPES, entity_type
     return False, None

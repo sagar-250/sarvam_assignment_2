@@ -10,3 +10,4 @@ eval/results/_simulation_run.db
 .pytest_cache/
 *.egg-info/
 .playwright-mcp/
+models/

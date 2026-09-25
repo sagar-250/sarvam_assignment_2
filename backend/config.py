@@ -47,7 +47,9 @@ KIVI_NER_AMBIGUOUS_GATE_ENABLED = os.environ.get("KIVI_NER_AMBIGUOUS_GATE_ENABLE
 
 # Optional: use the ONNX NER backend to decide adjacent-pair grouping
 # (grouping.py), for free and without credentials, ahead of the LLM path.
-# Scoped deliberately narrow - see grouping.py for why only person-type
-# merges are trusted from this signal; everything else falls through to the
-# LLM path (if enabled) or stays separate, same as today.
+# Runs NER on the corrected text and merges adjacent corrections covered by
+# one person/place entity into a single memory ("abu" + "dabi" -> "abu dabi"
+# -> "Abu Dhabi"). Product/ORG spans are never merged from this signal (see
+# onnx_ner.MERGEABLE_ENTITY_TYPES); those fall through to the LLM path (if
+# enabled) or stay separate, same as today.
 KIVI_NER_GROUPING_ENABLED = os.environ.get("KIVI_NER_GROUPING_ENABLED", "false").lower() == "true"
