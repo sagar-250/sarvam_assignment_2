@@ -28,3 +28,26 @@ KIVI_USE_LLM_FORMATTER = os.environ.get("KIVI_USE_LLM_FORMATTER", "false").lower
 # Optional LLM-assisted grouping of adjacent corrections (off by default,
 # see backend/grouping.py) - needs credentials too, degrades silently without them.
 KIVI_LLM_GROUPING_ENABLED = os.environ.get("KIVI_LLM_GROUPING_ENABLED", "false").lower() == "true"
+
+# Optional ONNX-quantized NER backend (dslim/bert-base-NER, int8 via
+# onnxruntime - see backend/onnx_ner.py). Off by default: "spacy" keeps the
+# existing free/offline behavior unchanged everywhere. Switching to "onnx"
+# needs `pip install optimum[onnxruntime] onnxruntime` and a locally
+# exported+quantized model directory - see README for the export commands.
+# Missing dependency or missing export dir both fail soft to the prior
+# behavior (cue-word heuristic in diff.py, spaCy in ner_extraction.py).
+KIVI_NER_BACKEND = os.environ.get("KIVI_NER_BACKEND", "spacy")  # "spacy" | "onnx"
+KIVI_ONNX_NER_DIR = os.environ.get("KIVI_ONNX_NER_DIR", str(BASE_DIR / "models" / "dslim-onnx"))
+
+# Optional: use the ONNX NER backend as the ambiguous-word gate in
+# decision.py, instead of the hand-curated COMMON_WORD_CUES cue-word list.
+# Off by default - one extra model call per /run request (not per candidate,
+# see decision.py) only when there's an ambiguous-word candidate to check.
+KIVI_NER_AMBIGUOUS_GATE_ENABLED = os.environ.get("KIVI_NER_AMBIGUOUS_GATE_ENABLED", "false").lower() == "true"
+
+# Optional: use the ONNX NER backend to decide adjacent-pair grouping
+# (grouping.py), for free and without credentials, ahead of the LLM path.
+# Scoped deliberately narrow - see grouping.py for why only person-type
+# merges are trusted from this signal; everything else falls through to the
+# LLM path (if enabled) or stays separate, same as today.
+KIVI_NER_GROUPING_ENABLED = os.environ.get("KIVI_NER_GROUPING_ENABLED", "false").lower() == "true"

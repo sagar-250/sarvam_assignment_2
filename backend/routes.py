@@ -62,7 +62,7 @@ def run_transcript(session: Session, asr: str) -> RunResponse:
     formatted = format_text(asr)
     tokens = tokenize(formatted)
     candidates = retrieve(session, tokens)
-    decisions = decide(tokens, candidates)
+    decisions = decide(tokens, candidates, formatted)
     memory_aware = apply_decisions(formatted, tokens, decisions)
 
     interventions = [_decision_to_intervention_out(d) for d in decisions if d.kind == "intervene"]

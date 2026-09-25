@@ -14,10 +14,26 @@ PRODUCT_CUES = {"service", "app", "device", "software", "product", "platform", "
 _CONTEXT_WINDOW = 4
 
 
-def _infer_entity_type(c_tokens: list[Token], j1: int, j2: int) -> str:
-    """Localized heuristic: look only at words near this specific span, not
-    the whole sentence, so one product-flavoured sentence doesn't mislabel
-    every person's name it also happens to mention."""
+def _infer_entity_type(c_tokens: list[Token], j1: int, j2: int, corrected_text: str | None = None) -> str:
+    """Entity type for the span c_tokens[j1:j2]. Tries the ONNX NER backend
+    first when config.KIVI_NER_BACKEND == "onnx" (off by default) - real
+    classification instead of a fixed cue-word guess. Falls back to the cue
+    heuristic below whenever NER is disabled, unavailable, or has no opinion
+    on this exact span, so this never regresses the spaCy-backend default.
+
+    The cue heuristic itself is a localized one: look only at words near
+    this specific span, not the whole sentence, so one product-flavoured
+    sentence doesn't mislabel every person's name it also happens to
+    mention."""
+    if config.KIVI_NER_BACKEND == "onnx" and corrected_text is not None:
+        from backend.onnx_ner import extract_entity_spans, onnx_ner_available
+
+        if onnx_ner_available():
+            span_start, span_end = c_tokens[j1].start, c_tokens[j2 - 1].end
+            for start, end, entity_type in extract_entity_spans(corrected_text):
+                if start <= span_start and span_end <= end:
+                    return entity_type
+
     before = c_tokens[max(0, j1 - _CONTEXT_WINDOW) : j1]
     after = c_tokens[j2 : j2 + _CONTEXT_WINDOW]
     nearby_norms = {t.norm for t in before + after}
@@ -89,7 +105,7 @@ def extract_observations(asr_text: str, corrected_text: str) -> tuple[list[Obser
                         observed_form=f_tok.norm,
                         canonical_form=c_tok.base,
                         token_count=1,
-                        entity_type=_infer_entity_type(c_tokens, j1 + offset, j1 + offset + 1),
+                        entity_type=_infer_entity_type(c_tokens, j1 + offset, j1 + offset + 1, corrected_text),
                     )
                 )
             continue
@@ -113,7 +129,7 @@ def extract_observations(asr_text: str, corrected_text: str) -> tuple[list[Obser
                 observed_form=observed_form,
                 canonical_form=canonical_form,
                 token_count=len(obs_tokens),
-                entity_type=_infer_entity_type(c_tokens, j1, j2),
+                entity_type=_infer_entity_type(c_tokens, j1, j2, corrected_text),
             )
         )
 
